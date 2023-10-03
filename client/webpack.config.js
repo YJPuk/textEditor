@@ -23,14 +23,18 @@ module.exports = () => {
         favicon: './favicon.ico',
         title: 'JATE',
       }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'sw.js',
+      }),
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
         name: 'JATE',
         short_name: 'JATE',
         description: 'Just Another Text Editor',
-        background_color: '#7eb4e2',
-        theme_color: '#7eb4e2',
+        background_color: '#5c7e9c',
+        theme_color: '#53a6ed',
         start_url: './',
         publicPath: './',
         icons: [
@@ -41,36 +45,28 @@ module.exports = () => {
           },
         ],
       }),
-      new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'sw.js',
-      }),
     ],
 
     module: {
       rules: [
         {
-          type: /\.css$/i,
+          test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.(png|svg|jpg|jpeg|gif)$/i,
-          type: 'asset/resource',
-        },
-        {
           test: /\.m?js$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              presets: ['@babel/preset-env'],
+              presets: ["@babel/preset-env"],
               plugins: [
                 "@babel/plugin-proposal-object-rest-spread",
                 "@babel/transform-runtime",
               ],
             },
           },
-        }, 
+        }
       ],
     },
   };
